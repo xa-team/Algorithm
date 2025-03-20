@@ -1,33 +1,14 @@
-using System;
-using System.Collections.Generic;
+using var sr = new StreamReader(new BufferedStream(Console.OpenStandardInput()));
+using var sw = new StreamWriter(new BufferedStream(Console.OpenStandardOutput()));
 
-class BiDictionary<TKey, TValue>
-{
-    private Dictionary<TKey, TValue> forward = new Dictionary<TKey, TValue>();
-    private Dictionary<TValue, TKey> backward = new Dictionary<TValue, TKey>();
-
-    public void Add(TKey key, TValue value)
-    {
-        forward[key] = value;
-        backward[value] = key;
-    }
-
-    public TValue GetValue(TKey key) => forward[key];
-    public TKey GetKey(TValue value) => backward[value];
+int[] n = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
+Dictionary<string, string> pokedex = new Dictionary<string, string>();
+string id, name;
+for(int i = 1; i <= n[0]; i++){
+    id = i.ToString();
+    name = sr.ReadLine();
+    pokedex.Add(id, name);
+    pokedex.Add(name, id);
 }
-
-class Program{
-    static void Main(){
-        int[] numList = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
-        BiDictionary<string, int> pokedex = new BiDictionary<string, int>();
-        for(int i = 0; i < numList[0]; i++)
-            pokedex.Add(Console.ReadLine(), i+1);
-        for(int i = 0; i < numList[1]; i++){
-            string a = Console.ReadLine();
-            if(int.TryParse(a, out int PokemonIndex))
-                Console.WriteLine(pokedex.GetKey(PokemonIndex));
-            else
-               Console.WriteLine(pokedex.GetValue(a));
-        }
-    }
-}
+for(int i = 0; i < n[1]; i++)
+    sw.WriteLine(pokedex[sr.ReadLine()]);
