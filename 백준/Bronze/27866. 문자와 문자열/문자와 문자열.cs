@@ -1,0 +1,1 @@
+Console.Write(new string(Console.ReadLine())[int.Parse(Console.ReadLine())-1]);
