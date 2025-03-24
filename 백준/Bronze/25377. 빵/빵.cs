@@ -8,4 +8,6 @@ for(int i = 0; i < n; i++){
     if(tmp[1] - tmp[0] >= 0)
         arr.Add(tmp[1]);
 }
+if(arr.Count() == 0)
+    arr.Add(-1);
 sw.Write(arr.Min());
