@@ -8,7 +8,6 @@ for (int j = 1000000; ; j /= 10)
         danwi = j;
         break;
     }
-// Console.WriteLine(danwi);
 for (int j = 1; j <= n; j++)
 { // 각 자리 숫자의 합을 구하는 반복문
     tmp = 0;
