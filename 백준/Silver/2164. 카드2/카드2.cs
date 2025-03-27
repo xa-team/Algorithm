@@ -1,10 +1,9 @@
 int n = int.Parse(Console.ReadLine());
-Queue<int> card = new Queue<int>();
-
+var c = new Queue<int>();
 for(int i = 1; i <= n; i++)
-    card.Enqueue(i);
-for(int i = 0; i < n-1; i++){
-    card.Dequeue();
-    card.Enqueue(card.Dequeue());
+    c.Enqueue(i);
+for(int i = 1; i < n; i++){
+    c.Dequeue();
+    c.Enqueue(c.Dequeue());
 }
-Console.Write(card.Dequeue());
+Console.Write(c.Dequeue());
