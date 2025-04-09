@@ -1,2 +1,2 @@
-string nickname = Console.ReadLine();
-Console.Write($":fan::fan::fan:\n:fan::{nickname}::fan:\n:fan::fan::fan:");
+var f = ":fan:";
+Console.Write($"{f}{f}{f}\n{f}:{Console.ReadLine()}:{f}\n{f}{f}{f}");
