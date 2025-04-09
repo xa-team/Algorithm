@@ -1,43 +1,33 @@
 using System.Text;
 
 int n = int.Parse(Console.ReadLine());
-
-var seq = new int[n];
+int[] seq = new int[n];
 for (int i = 0; i < n; i++) seq[i] = int.Parse(Console.ReadLine());
 
 var st = new Stack<int>(n);
 var sb = new StringBuilder();
 
-int cnt = 1;
+int num = 1;
 int index = 0;
-st.Push(cnt++);
-sb.AppendLine("+");
-while (true)
+
+while (num <= n || st.Count > 0)
 {
-    if (index == n - 1 || cnt == n + 1)
-    {
-        break;
-    }
-    else if (st.TryPeek(out int top) && (top == seq[index]))
+    if (st.Count > 0 && st.Peek() == seq[index])
     {
         st.Pop();
-        index++;
         sb.AppendLine("-");
+        index++;
     }
-    else
+    else if (num <= n)
     {
-        st.Push(cnt++);
+        st.Push(num++);
         sb.AppendLine("+");
     }
-}
-while (st.Count > 0)
-{
-    if (st.Peek() != seq[index++])
+    else
     {
         Console.Write("NO");
         return;
     }
-    st.Pop();
-    sb.AppendLine("-");
 }
-Console.Write(sb);
+
+Console.Write(sb.ToString());
