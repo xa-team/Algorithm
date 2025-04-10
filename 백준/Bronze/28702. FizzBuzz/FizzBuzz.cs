@@ -34,14 +34,12 @@ void PrintNextString(int n)
     }
 }
 
-string[] input = new string[3];
-
 for (int i = 0; i < 3; i++)
 {
-    input[i] = Console.ReadLine();
-    if (CheckNumber(input[i]))
+    string str = Console.ReadLine();
+    if (CheckNumber(str))
     {
-        PrintNextString(int.Parse(input[i]) + (3 - i));
+        PrintNextString(int.Parse(str) + (3 - i));
         return;
     }
 }
