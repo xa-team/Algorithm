@@ -1,4 +1,4 @@
-//6236KB, 56ms, 658B
+//6236KB, 56ms, 658B -> Span 수정 버전
 
 using var sr = new StreamReader(new BufferedStream(Console.OpenStandardInput()));
 
@@ -12,7 +12,7 @@ for (int i = 0; i < K; i++) cableArr[i] = long.Parse(sr.ReadLine());
 Span<long> cables = cableArr; // Span으로 감쌈.
 
 long right = cables[0];
-for (int i = 1; i < cables.Length; i++) // Max 구하는거 Span으로 감쌌기에 lINQ보다 배열 순회가 빠름.
+for (int i = 1; i < cables.Length; i++) // Span으로 감쌌기에 lINQ(.Max)보다 배열 순회가 빠르고, 메모리 덜 먹음.
 {
     if (cables[i] > right) right = cables[i];
 }
@@ -25,9 +25,9 @@ while (left <= right)
     long mid = (left + right) / 2;
     long count = 0;
 
-    foreach (long cable in cableArr)
+    for (int i = 0; i < cables.Length; i++) // Span의 경우 for 루프문이 빠름.
     {
-        count += cable / mid;
+        count += cables[i] / mid;
     }
 
     if (count >= N)
