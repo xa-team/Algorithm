@@ -1,28 +1,29 @@
-StreamReader sr = new StreamReader(new BufferedStream(Console.OpenStandardInput()));
+using var sr = new StreamReader(new BufferedStream(Console.OpenStandardInput()));
 
-long[] numArr = Array.ConvertAll(sr.ReadLine().Split(), long.Parse);
-long K = numArr[0];
-long N = numArr[1];
+long[] input = Array.ConvertAll(sr.ReadLine().Split(), long.Parse);
+int K = (int)input[0];
+long N = input[1];
 
-List<long> lanCable = new();
-for (int i = 0; i < K; i++) lanCable.Add(long.Parse(sr.ReadLine()));
+long[] cables = new long[K];
+for (int i = 0; i < K; i++) cables[i] = long.Parse(sr.ReadLine());
 
-long right = lanCable.Max();
+long right = cables.Max();
 long left = 1;
-long maxLen = 0;
+long result = 0;
+
 while (left <= right)
 {
     long mid = (left + right) / 2;
-    long cnt = 0;
+    long count = 0;
 
-    foreach (long len in lanCable)
+    foreach (long cable in cables)
     {
-        cnt += len / mid;
+        count += cable / mid;
     }
 
-    if (cnt >= N)
+    if (count >= N)
     {
-        maxLen = mid;
+        result = mid;
         left = mid + 1;
     }
     else
@@ -30,4 +31,5 @@ while (left <= right)
         right = mid - 1;
     }
 }
-Console.Write(maxLen);
+
+Console.Write(result);
