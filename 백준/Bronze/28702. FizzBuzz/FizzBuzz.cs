@@ -1,12 +1,12 @@
-bool CheckNumber(string str)
-{
-    if (str == "Fizz" || str == "Buzz" || str == "FizzBuzz")
-    {
-        return false;
-    }
+// bool CheckNumber(string str)
+// {
+//     if (str == "Fizz" || str == "Buzz" || str == "FizzBuzz")
+//     {
+//         return false;
+//     }
 
-    return true;
-}
+//     return true;
+// }
 
 void PrintNextString(int n)
 {
@@ -37,7 +37,7 @@ void PrintNextString(int n)
 for (int i = 0; i < 3; i++)
 {
     string str = Console.ReadLine();
-    if (CheckNumber(str))
+    if (str[0] >= '0' && str[0] <= '9')
     {
         PrintNextString(int.Parse(str) + (3 - i));
         return;
