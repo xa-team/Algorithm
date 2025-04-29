@@ -1,5 +1,7 @@
-int[] a = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+int[] input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
 int[] numArr = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
-foreach(int i in numArr)
-    if(i < a[1])
-        Console.Write($"{i} ");
+
+List<int> sortedArr = numArr.Where(x => x < input[1]).ToList();
+
+Console.Write(string.Join(" ", sortedArr));
