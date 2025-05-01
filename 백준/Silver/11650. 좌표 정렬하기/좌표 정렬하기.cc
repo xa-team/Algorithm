@@ -5,13 +5,7 @@
 #include <vector>
 
 using namespace std;
-void swapVector(vector<vector<int>> &coords, int i)
-{
-    vector<int> tmp;
-    tmp = coords[i];
-    coords[i] = coords[i + 1];
-    coords[i + 1] = tmp;
-}
+
 int main()
 {
     ios::sync_with_stdio(false);
