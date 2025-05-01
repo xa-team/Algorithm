@@ -1,31 +1,22 @@
 // 3052. 나머지
 
 #include <iostream>
-#include <unordered_map>
 
 using namespace std;
 
 int main()
 {
-    unordered_map<int, bool> numCount;
-    for (int i = 0; i < 42; i++)
-    {
-        numCount[i] = false;
-    }
+    int arr[42] = {0};
     for (int i = 0; i < 10; i++)
     {
         int n;
         cin >> n;
-        numCount[n % 42] = true;
+        arr[n % 42] = 1;
     }
-
-    int count = 0;
-    for (int i = 0; i < 42; i++)
+    int sum = 0;
+    for (int n : arr)
     {
-        if (numCount[i])
-        {
-            count++;
-        }
+        sum += n;
     }
-    cout << count;
+    cout << sum;
 }
