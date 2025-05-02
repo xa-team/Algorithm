@@ -1,30 +1,29 @@
 // 1463. 1로 만들기
 
 #include <iostream>
-#include <vector>
-#include <functional>
 
 using namespace std;
+
+const int INF = 0x7fffffff;
 
 int main()
 {
     int n;
     cin >> n;
-    vector<int> DP(n + 1, 0);
-
-    function<int(int)> TopDown = [&](int num) -> int
+    int DP[n + 1];
+    DP[1] = 0;
+    for (int i = 2; i <= n; i++)
     {
-        if (num <= 1)
-            return 0;
-        if (DP[num] != 0)
-            return DP[num];
-        int res = TopDown(num - 1) + 1;
-        if (num % 2 == 0)
-            res = min(res, TopDown(num / 2) + 1);
-        if (num % 3 == 0)
-            res = min(res, TopDown(num / 3) + 1);
-        return DP[num] = res;
-    };
+        int a = INF, b = INF, c = INF, result;
+        if (i % 3 == 0)
+            a = DP[i / 3] + 1;
+        if (i % 2 == 0)
+            b = DP[i / 2] + 1;
+        c = DP[i - 1] + 1;
+        result = min(a, b);
+        result = min(result, c);
+        DP[i] = result;
+    }
 
-    cout << TopDown(n);
+    cout << DP[n];
 }
