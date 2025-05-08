@@ -7,6 +7,9 @@ using namespace std;
 
 int main()
 {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     queue<int> q;
 
     int n;
