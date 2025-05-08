@@ -1,8 +1,5 @@
-// 1966. 프린트 큐
-
 #include <iostream>
 #include <queue>
-#include <vector>
 
 using namespace std;
 
@@ -13,68 +10,41 @@ int main()
 
     while (T-- > 0)
     {
-        // priority_queue<vector<int>, vector<vector<int>>> pq; // 큐 안에 (우선순위, 인덱스) 인 벡터를 넣을 것.
-        // int N, M;
-        // cin >> N >> M;
-        // for (int i = 0; i < N; i++)
-        // {
-        //     int priority;
-        //     cin >> priority;
-        //     pq.push({priority, i});
-        // }
-
-        // int count = 1;
-        // while (!pq.empty())
-        // {
-        //     vector<int> current = pq.top();
-        //     pq.pop();
-        //     if (current[1] == M)
-        //     {
-        //         cout << count << '\n';
-        //         break;
-        //     }
-        // }
-
-        queue<vector<int>> q;
         int N, M;
         cin >> N >> M;
+
+        queue<pair<int, int>> q;
+        priority_queue<int> pq;
+
         for (int i = 0; i < N; ++i)
         {
             int priority;
             cin >> priority;
             q.push({priority, i});
+            pq.push(priority);
         }
 
         int count = 0;
         while (!q.empty())
         {
-            vector<int> current = q.front();
+            pair<int, int> current = q.front();
             q.pop();
-            bool hasHigher = false;
-            int queueSize = q.size();
-            for (int i = 0; i < queueSize; ++i)
-            {
-                vector<int> next = q.front();
-                q.pop();
 
-                if (next[0] > current[0])
-                    hasHigher = true;
-
-                q.push(next);
-            }
-
-            if (hasHigher)
+            // 현재 문서가 우선순위 가장 높은 문서인지 확인
+            if (current.first == pq.top())
             {
-                q.push(current);
-            }
-            else
-            {
+                pq.pop();
                 count++;
-                if (current[1] == M)
+
+                if (current.second == M)
                 {
                     cout << count << '\n';
                     break;
                 }
+            }
+            else
+            {
+                q.push(current);
             }
         }
     }
