@@ -1,4 +1,4 @@
-// 18870. 좌표압축
+//11870. 좌표 압축
 
 #include <iostream>
 #include <vector>
@@ -14,36 +14,29 @@ int main()
     int n;
     cin >> n;
 
-    vector<pair<int, int>> v;
+    vector<pair<int, int>> coords(n); // (값, 원래 인덱스)
     for (int i = 0; i < n; ++i)
     {
-        int num;
-        cin >> num;
-        v.push_back({num, i});
+        cin >> coords[i].first;
+        coords[i].second = i;
     }
 
-    sort(v.begin(), v.end());
+    sort(coords.begin(), coords.end());
 
-    int index = 0;
-    int preNum = v[0].first;
-    v[0].first = 0;
-    for (auto it = v.begin() + 1; it != v.end(); ++it)
+    int compressedNum = 0;
+    vector<int> result(n);
+    result[coords[0].second] = 0;
+
+    for (int i = 1; i < n; ++i)
     {
-        if (preNum != it->first)
-        {
-            preNum = it->first;
-            it->first = ++index;
-        }
-        else
-        {
-            it->first = index;
-        }
+        if (coords[i].first != coords[i - 1].first)
+            ++compressedNum;
+
+        result[coords[i].second] = compressedNum;
     }
-    sort(v.begin(), v.end(), [](pair<int, int> a, pair<int, int> b)
-         { return a.second < b.second; });
 
-    for (int i = 0; i < n; ++i)
+    for (int x : result)
     {
-        cout << v[i].first << ' ';
+        cout << x << ' ';
     }
 }
