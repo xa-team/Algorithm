@@ -20,8 +20,8 @@ int main()
     {
         if (total - coins[index] >= 0)
         {
-            total -= coins[index];
-            ++count;
+            count += (total / coins[index]);
+            total %= coins[index];
         }
         else
         {
