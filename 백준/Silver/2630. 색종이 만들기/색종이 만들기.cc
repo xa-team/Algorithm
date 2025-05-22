@@ -1,54 +1,63 @@
-// 2630. 색종이 만들기
+//2630. 색종이 만들기(리팩토링)
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-vector<vector<int>> table(128, vector<int>(128, 0));
-vector<int> colorCount(2, 0);
+class PaperCounter {
+private:
+    vector<vector<int>> paper;
+    int white = 0;
+    int blue = 0;
 
-void DivideAndConquer(int n, int x, int y)
-{
-    int color = table[x][y];
-    bool isOk = true;
-    for (int i = x; i < x + n; ++i)
-    {
-        for (int j = y; j < y + n; ++j)
-        {
-            if (table[i][j] != color)
-            {
-                isOk = false;
-                break;
-            }
+public:
+    PaperCounter(int n) : paper(n, vector<int>(n)) {}
+
+    void input() {
+        for (auto& row : paper)
+            for (int& cell : row)
+                cin >> cell;
+    }
+
+    void countColors() {
+        divideAndConquer(0, 0, paper.size());
+        cout << white << '\n' << blue << '\n';
+    }
+
+private:
+    void divideAndConquer(int x, int y, int size) {
+        int color = paper[x][y];
+        if (isUniform(x, y, size, color)) {
+            color == 0 ? ++white : ++blue;
+            return;
         }
-        if (!isOk)
-            break;
+
+        int half = size / 2;
+        divideAndConquer(x, y, half);                   // 왼쪽 위
+        divideAndConquer(x, y + half, half);            // 왼쪽 아래
+        divideAndConquer(x + half, y, half);            // 오른쪽 위
+        divideAndConquer(x + half, y + half, half);     // 오른쪽 아래
     }
 
-    if (isOk)
-    {
-        colorCount[color]++;
-        return;
+    bool isUniform(int x, int y, int size, int color) {
+        for (int i = x; i < x + size; ++i)
+            for (int j = y; j < y + size; ++j)
+                if (paper[i][j] != color)
+                    return false;
+        return true;
     }
+};
 
-    int half = n / 2;
-    DivideAndConquer(half, x, y);               // 왼쪽 위
-    DivideAndConquer(half, x, y + half);        // 왼쪽 아래
-    DivideAndConquer(half, x + half, y);        // 오른쪽 위
-    DivideAndConquer(half, x + half, y + half); // 오른쪽 아래
-}
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-int main()
-{
     int n;
     cin >> n;
 
-    for (int i = 0; i < n; ++i)
-    {
-        for (int j = 0; j < n; ++j)
-            cin >> table[i][j];
-    }
+    PaperCounter counter(n);
+    counter.input();
+    counter.countColors();
 
-    DivideAndConquer(n, 0, 0);
-    cout << colorCount[0] << '\n'
-         << colorCount[1] << '\n';
+    return 0;
 }
