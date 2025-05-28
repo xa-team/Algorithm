@@ -4,24 +4,26 @@
 #define fastio cin.tie(0)->sync_with_stdio(0)
 using namespace std;
 
-int unripeCount;
-int ripedCount;
-queue<tuple<int, int, int>> q;
-vector<vector<vector<int>>> graph;
+const int dx[6] = {-1, 1, 0, 0, 0, 0};
+const int dy[6] = {0, 0, -1, 1, 0, 0};
+const int dz[6] = {0, 0, 0, 0, -1, 1};
 
-int BFS(int m, int n, int h)
+int m, n, h; // m : 가로 길이, n : 세로 길이, h : 높이
+vector<vector<vector<int>>> graph;
+queue<tuple<int, int, int>> q;
+
+int BFS(int totalUnripe)
 {
-    int dx[6] = {-1, 1, 0, 0, 0, 0};
-    int dy[6] = {0, 0, -1, 1, 0, 0};
-    int dz[6] = {0, 0, 0, 0, -1, 1};
-    int day = -1;
+    if (totalUnripe == 0)
+        return 0;
+    int day = -1, ripedCount = 0;
 
     while (!q.empty())
     {
-        int queueSize = q.size();
+        int qSize = q.size();
         ++day;
 
-        for (int i = 0; i < queueSize; ++i)
+        for (int i = 0; i < qSize; ++i)
         {
             auto [z, y, x] = q.front();
             q.pop();
@@ -39,30 +41,22 @@ int BFS(int m, int n, int h)
 
                 graph[nz][ny][nx] = 1;
                 q.push({nz, ny, nx});
-                ripedCount++;
+                ++ripedCount;
             }
         }
     }
 
-    return day;
+    return (ripedCount == totalUnripe) ? day : -1;
 }
 
 int main()
 {
-    int m, n, h; // m : 가로 길이, n : 세로 길이, h : 높이
+    fastio;
     cin >> m >> n >> h;
 
-    unripeCount = 0;
+    int totalUnripe = 0;
 
-    graph.resize(h);
-    for (int i = 0; i < h; ++i)
-    {
-        graph[i].resize(n);
-        for (int j = 0; j < n; ++j)
-        {
-            graph[i][j].resize(m);
-        }
-    }
+    graph.assign(h, vector<vector<int>>(n, vector<int>(m)));
 
     for (int i = 0; i < h; ++i)
     {
@@ -79,12 +73,11 @@ int main()
                 }
                 else if (tmp == 0)
                 {
-                    unripeCount++;
+                    ++totalUnripe;
                 }
             }
         }
     }
 
-    int day = BFS(m, n, h);
-    cout << (ripedCount == unripeCount ? day : -1);
+    cout << BFS(totalUnripe);
 }
