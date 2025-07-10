@@ -5,9 +5,7 @@ using namespace std;
 
 #define fastio cin.tie(0)->sync_with_stdio(0)
 
-vector<int> gametable(101, 0);
-
-int getMin()
+int getMin(const vector<int> gametable)
 {
     vector<int> dist(101, -1);
     queue<int> q;
@@ -22,21 +20,13 @@ int getMin()
 
         for (int i = 1; i <= 6 && cur + i <= 100; ++i)
         {
-            if (gametable[cur + i] != 0)
+            int next = cur + i;
+            int final = (gametable[next] == 0) ? next : gametable[next];
+
+            if (dist[final] == -1)
             {
-                if (dist[gametable[cur + i]] == -1)
-                {
-                    q.push(gametable[cur + i]);
-                    dist[gametable[cur + i]] = dist[cur] + 1;
-                }
-            }
-            else
-            {
-                if (dist[cur + i] == -1)
-                {
-                    q.push(cur + i);
-                    dist[cur + i] = dist[cur] + 1;
-                }
+                dist[final] = dist[cur] + 1;
+                q.push(final);
             }
         }
     }
@@ -46,6 +36,8 @@ int getMin()
 int main()
 {
     fastio;
+
+    vector<int> gametable(101, 0);
 
     int n, m;
     cin >> n >> m;
@@ -63,5 +55,5 @@ int main()
         gametable[u] = v;
     }
 
-    cout << getMin();
+    cout << getMin(gametable);
 }
