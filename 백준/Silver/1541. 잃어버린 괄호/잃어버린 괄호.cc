@@ -6,31 +6,33 @@ using namespace std;
 
 int main()
 {
+    fastio;
     string expression;
     cin >> expression;
 
     bool hasNegative = false;
-    int sum = 0, num = 0;
-    for (auto it = expression.begin(); it != expression.end(); ++it)
+    int sum = 0;
+    string numStr = "";
+
+    for (char ch : expression)
     {
-        if (*it - '0' >= 0 && *it - '0' <= 9) // 숫자일 경우
+        if (ch == '-' || ch == '+') // 연산자일 경우
         {
-            int n = *it - '0';
-            num = (num * 10) + n;
+            int num = stoi(numStr);
+            sum += hasNegative ? -num : num;
+            numStr = "";
+
+            if (ch == '-')
+                hasNegative = true;
         }
         else
         {
-            sum = hasNegative ? sum - num : sum + num;
-            num = 0;
-
-            if (*it == '-')
-                hasNegative = true;
-        }
-
-        if (it + 1 == expression.end())
-        {
-            sum = hasNegative ? sum - num : sum + num;
+            numStr += ch;
         }
     }
+
+    int lastnum = stoi(numStr);
+    sum += hasNegative ? -lastnum : lastnum;
+
     cout << sum;
 }
