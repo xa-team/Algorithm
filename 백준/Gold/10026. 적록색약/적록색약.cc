@@ -8,65 +8,94 @@ const int dy[4] = {0, 0, -1, 1};
 
 void DFS_B(int x, int y, int n, const vector<vector<char>> &graph, vector<vector<bool>> &visited)
 {
+    queue<pair<int, int>> q;
+
     visited[y][x] = true;
-
-    for (int dir = 0; dir < 4; ++dir)
+    q.push({x, y});
+    while (!q.empty())
     {
-        int nx = dx[dir] + x;
-        int ny = dy[dir] + y;
-
-        if (nx < n && nx >= 0 && ny < n && ny >= 0)
+        auto [x, y] = q.front();
+        q.pop();
+        for (int dir = 0; dir < 4; ++dir)
         {
-            if (!visited[ny][nx] && graph[ny][nx] == 'B')
-                DFS_B(nx, ny, n, graph, visited);
+            int nx = dx[dir] + x;
+            int ny = dy[dir] + y;
+
+            if (nx < n && nx >= 0 && ny < n && ny >= 0 && !visited[ny][nx] && graph[ny][nx] == 'B')
+            {
+                visited[ny][nx] = true;
+                q.push({nx, ny});
+            }
         }
     }
 }
 void DFS_R(int x, int y, int n, const vector<vector<char>> &graph, vector<vector<bool>> &visited)
 {
+    queue<pair<int, int>> q;
+
     visited[y][x] = true;
-
-    for (int dir = 0; dir < 4; ++dir)
+    q.push({x, y});
+    while (!q.empty())
     {
-        int nx = dx[dir] + x;
-        int ny = dy[dir] + y;
-
-        if (nx < n && nx >= 0 && ny < n && ny >= 0)
+        auto [x, y] = q.front();
+        q.pop();
+        for (int dir = 0; dir < 4; ++dir)
         {
-            if (!visited[ny][nx] && graph[ny][nx] == 'R')
-                DFS_R(nx, ny, n, graph, visited);
+            int nx = dx[dir] + x;
+            int ny = dy[dir] + y;
+
+            if (nx < n && nx >= 0 && ny < n && ny >= 0 && !visited[ny][nx] && graph[ny][nx] == 'R')
+            {
+                visited[ny][nx] = true;
+                q.push({nx, ny});
+            }
         }
     }
 }
 void DFS_G(int x, int y, int n, const vector<vector<char>> &graph, vector<vector<bool>> &visited)
 {
+    queue<pair<int, int>> q;
+
     visited[y][x] = true;
-
-    for (int dir = 0; dir < 4; ++dir)
+    q.push({x, y});
+    while (!q.empty())
     {
-        int nx = dx[dir] + x;
-        int ny = dy[dir] + y;
-
-        if (nx < n && nx >= 0 && ny < n && ny >= 0)
+        auto [x, y] = q.front();
+        q.pop();
+        for (int dir = 0; dir < 4; ++dir)
         {
-            if (!visited[ny][nx] && graph[ny][nx] == 'G')
-                DFS_G(nx, ny, n, graph, visited);
+            int nx = dx[dir] + x;
+            int ny = dy[dir] + y;
+
+            if (nx < n && nx >= 0 && ny < n && ny >= 0 && !visited[ny][nx] && graph[ny][nx] == 'G')
+            {
+                visited[ny][nx] = true;
+                q.push({nx, ny});
+            }
         }
     }
 }
 void DFS_RG(int x, int y, int n, const vector<vector<char>> &graph, vector<vector<bool>> &visited)
 {
+    queue<pair<int, int>> q;
+
     visited[y][x] = true;
-
-    for (int dir = 0; dir < 4; ++dir)
+    q.push({x, y});
+    while (!q.empty())
     {
-        int nx = dx[dir] + x;
-        int ny = dy[dir] + y;
-
-        if (nx < n && nx >= 0 && ny < n && ny >= 0)
+        auto [x, y] = q.front();
+        q.pop();
+        for (int dir = 0; dir < 4; ++dir)
         {
-            if (!visited[ny][nx] && (graph[ny][nx] == 'R' || graph[ny][nx] == 'G'))
-                DFS_RG(nx, ny, n, graph, visited);
+            int nx = dx[dir] + x;
+            int ny = dy[dir] + y;
+
+            if (nx < n && nx >= 0 && ny < n && ny >= 0 && !visited[ny][nx] &&
+                (graph[ny][nx] == 'R' || graph[ny][nx] == 'G'))
+            {
+                visited[ny][nx] = true;
+                q.push({nx, ny});
+            }
         }
     }
 }
