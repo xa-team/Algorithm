@@ -1,23 +1,23 @@
-// 11725. 트리의 부모 찾기 (이진 트리로 구현)
-
+// 11725. 트리의 부모 찾기
 #include <iostream>
 #include <queue>
 #include <vector>
 
 using namespace std;
 vector<int> parent;
-
-void BFS(vector<int> arrayList[])
+vector<int> adj[100001];
+void BFS()
 {
     queue<int> q;
     q.push(1);
+    parent[1] = 1;
 
     while (!q.empty())
     {
         int cur = q.front();
         q.pop();
 
-        for (int next : arrayList[cur])
+        for (int next : adj[cur])
         {
             if (parent[next] == 0)
             {
@@ -30,21 +30,23 @@ void BFS(vector<int> arrayList[])
 
 int main()
 {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
     int n;
     cin >> n;
 
-    vector<int> arrayList[n + 1];
     parent.assign(n + 1, 0);
-    parent[1] = 1;
+
     for (int i = 0; i < n - 1; ++i)
     {
         int a, b;
         cin >> a >> b;
-        arrayList[a].push_back(b);
-        arrayList[b].push_back(a);
+        adj[a].push_back(b);
+        adj[b].push_back(a);
     }
 
-    BFS(arrayList);
+    BFS();
 
     for (int i = 2; i <= n; ++i)
     {
