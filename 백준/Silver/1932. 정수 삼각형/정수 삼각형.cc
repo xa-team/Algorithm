@@ -4,20 +4,20 @@
 #include <vector>
 using namespace std;
 
-vector<vector<int>> graph;
-
 int main()
 {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
     int n;
     cin >> n;
 
-    graph.assign(n, vector<int>(n));
+    vector<vector<int>> graph(n, vector<int>(n));
+    int DP[501];
 
     for (int i = 0; i < n; ++i)
         for (int j = 0; j <= i; ++j)
             cin >> graph[i][j];
-
-    int DP[n];
 
     for (int i = 0; i < n; ++i)
     {
