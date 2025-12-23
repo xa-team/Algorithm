@@ -6,7 +6,7 @@
 #include <vector>
 
 using namespace std;
-int DP[1002][1002];
+int DP[1002];
 int main()
 {
     ios::sync_with_stdio(false);
@@ -21,18 +21,21 @@ int main()
 
     for (int i = 1; i <= len1; ++i)
     {
+        int diag = 0;
         for (int j = 1; j <= len2; ++j)
         {
+            int temp = DP[j];
             if (str1[i - 1] == str2[j - 1])
             {
-                DP[i][j] = DP[i - 1][j - 1] + 1;
+                DP[j] = diag + 1;
             }
             else
             {
-                DP[i][j] = max(DP[i - 1][j], DP[i][j - 1]);
+                DP[j] = max(DP[j], DP[j - 1]);
             }
+            diag = temp;
         }
     }
 
-    cout << DP[len1][len2];
+    cout << DP[len2];
 }
